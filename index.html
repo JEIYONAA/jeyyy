@@ -2,113 +2,159 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Quiz Adventure</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muslim Cilik Pixel Adventure</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <main id="game">
+<main class="game">
 
-        <button id="soundToggle" class="sound-button" onclick="toggleSound()">
-            SOUND: ON
+  <button id="soundToggle" class="sound-toggle">
+    🔊 SUARA ON
+  </button>
+
+  <!-- HOME -->
+  <section id="home" class="screen home">
+    <div class="sun">☀️</div>
+    <div class="cloud cloud1">☁️</div>
+    <div class="cloud cloud2">☁️</div>
+
+    <div class="home-content">
+      <div class="mascot">🧕🏻</div>
+
+      <h1>PETUALANGAN<br>
+        <span>MUSLIM CILIK</span>
+      </h1>
+
+      <p class="subtitle">
+        🌙 Belajar Islam sambil bermain! ⭐
+      </p>
+
+      <div class="name-box">
+        <label for="playerName">Siapa nama kamu? 😊</label>
+
+        <input id="playerName"
+          type="text"
+          maxlength="15"
+          placeholder="Tulis namamu...">
+
+        <button id="startBtn" class="main-btn">
+          MULAI PETUALANGAN 🚀
         </button>
+      </div>
+    </div>
 
-        <!-- SLIDE 1: PEMBUKA -->
-        <section class="screen active" id="opening">
+    <div class="ground">🌷 🌳 🕌 🌼 🌴 🌷</div>
+  </section>
 
-            <div class="pixel-character">
-                <div class="character-hat"></div>
-                <div class="character-head">
-                    <span class="eye left"></span>
-                    <span class="eye right"></span>
-                    <span class="smile"></span>
-                </div>
-                <div class="character-body"></div>
-                <div class="character-feet"></div>
-            </div>
+  <!-- MENU -->
+  <section id="menu" class="screen menu hidden">
 
-            <h1>PIXEL QUIZ</h1>
-            <p>Welcome to your adventure!</p>
-            <p>Siap memulai petualanganmu?</p>
+    <div class="topbar">
+      <span>🌟 MUSLIM CILIK</span>
+      <span id="score">⭐ 0</span>
+    </div>
 
-            <input
-                type="text"
-                id="playerName"
-                placeholder="Masukkan namamu"
-            >
+    <h2>Assalamu'alaikum! 👋</h2>
+    <h1 id="welcomeName">Halo, teman!</h1>
 
-            <button onclick="startGame()">START GAME</button>
-        </section>
+    <p class="big-text">
+      Yuk pilih petualanganmu!
+    </p>
 
-        <!-- SLIDE 2-6: PERTANYAAN -->
-        <section class="screen" id="quiz">
+    <div class="guide">🧒🏻</div>
 
-            <div class="quiz-mascot" id="quizMascot">🧑🏻‍🎓</div>
+    <div class="level-grid">
 
-            <p id="progress">QUESTION 1 / 5</p>
+      <button class="level-card" data-category="salam">
+        <span>👋</span>
+        <b>Salam & Doa</b>
+        <small>Belajar mengucap salam</small>
+      </button>
 
-            <h2 id="question"></h2>
+      <button class="level-card" data-category="islam">
+        <span>🕌</span>
+        <b>Agama Islam</b>
+        <small>Kenali agama kita</small>
+      </button>
 
-            <div id="answers"></div>
+      <button class="level-card" data-category="ibadah">
+        <span>🤲</span>
+        <b>Ibadah</b>
+        <small>Belajar salat dan wudu</small>
+      </button>
 
-            <p id="feedback"></p>
+      <button class="level-card" data-category="akhlak">
+        <span>💖</span>
+        <b>Akhlak Baik</b>
+        <small>Menjadi anak baik</small>
+      </button>
 
-        </section>
+    </div>
+  </section>
 
-        <!-- SLIDE 7: HASIL DAN ENDING -->
-        <section class="screen" id="result">
+  <!-- QUIZ -->
+  <section id="quiz" class="screen quiz hidden">
 
-            <div class="win-mascot">🏆🧑🏻‍🎓</div>
+    <div class="topbar">
+      <button id="backBtn" class="small-btn">
+        ⬅ MENU
+      </button>
 
-            <h1>GAME COMPLETED!</h1>
+      <span id="questionNumber">1/3</span>
+      <span id="quizScore">⭐ 0</span>
+    </div>
 
-            <p id="finalScore"></p>
+    <div class="quiz-character">🧒🏻</div>
 
-            <h2>CHOOSE YOUR ENDING</h2>
+    <div class="question-card">
+      <div id="questionIcon" class="question-icon">🌙</div>
 
-            <p>Pilih jalan ceritamu!</p>
+      <h2 id="questionText">
+        Apa ucapan saat bertemu teman?
+      </h2>
 
-            <div id="choices">
-                <button onclick="chooseEnding('Explorer')">
-                    THE EXPLORER
-                </button>
+      <p>Yuk pilih jawaban yang benar! 💕</p>
+    </div>
 
-                <button onclick="chooseEnding('Scholar')">
-                    THE SCHOLAR
-                </button>
+    <div id="answers" class="answers"></div>
 
-                <button onclick="chooseEnding('Hero')">
-                    THE HERO
-                </button>
-            </div>
+    <div id="feedback" class="feedback"></div>
 
-            <p id="ending"></p>
+    <button id="nextBtn" class="main-btn hidden">
+      LANJUT ➜
+    </button>
 
-            <!-- PILIHAN KELUAR -->
-            <div id="exitPrompt" style="display: none;">
+  </section>
 
-                <h2>INGIN KELUAR DARI PERMAINAN?</h2>
+  <!-- FINISH -->
+  <section id="finish" class="screen finish hidden">
 
-                <button onclick="exitGame()">
-                    YES, EXIT GAME
-                </button>
+    <div class="confetti">🎉 ⭐ 🌈 🎊</div>
 
-                <button onclick="playAgain()">
-                    NO, PLAY AGAIN
-                </button>
+    <div class="trophy">🏆</div>
 
-            </div>
+    <h1>MASYAALLAH!</h1>
+    <h2>Kamu Hebat Sekali! 💖</h2>
 
-            <p id="exitMessage"></p>
+    <p id="finalMessage"></p>
 
-        </section>
+    <div id="finalStars" class="final-stars"></div>
 
-    </main>
+    <button id="againBtn" class="main-btn">
+      MAIN LAGI 🔄
+    </button>
 
-    <script src="script.js"></script>
+    <button id="homeBtn" class="secondary-btn">
+      KEMBALI KE MENU 🏡
+    </button>
 
+  </section>
+
+</main>
+
+<script src="script.js"></script>
 </body>
 </html>

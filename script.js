@@ -1,75 +1,24 @@
 
-// ==========================================
-// PIXEL QUIZ ADVENTURE - ISLAMIC QUIZ
-// ==========================================
+/* =====================================
+   MUSLIM CILIK PIXEL ADVENTURE
+===================================== */
 
-// 1. DAFTAR PERTANYAAN
-const questions = [
-    {
-        question: "Siapa nabi terakhir dalam agama Islam?",
-        answers: [
-            "Nabi Ibrahim AS",
-            "Nabi Musa AS",
-            "Nabi Muhammad SAW",
-            "Nabi Isa AS"
-        ],
-        correct: 2
-    },
-    {
-        question: "Berapa jumlah rukun Islam?",
-        answers: [
-            "3",
-            "4",
-            "5",
-            "6"
-        ],
-        correct: 2
-    },
-    {
-        question: "Apa kitab suci umat Islam?",
-        answers: [
-            "Taurat",
-            "Injil",
-            "Zabur",
-            "Al-Qur'an"
-        ],
-        correct: 3
-    },
-    {
-        question: "Pada bulan apa umat Islam wajib berpuasa?",
-        answers: [
-            "Syawal",
-            "Ramadan",
-            "Muharram",
-            "Rajab"
-        ],
-        correct: 1
-    },
-    {
-        question: "Ke arah manakah umat Islam menghadap saat salat?",
-        answers: [
-            "Masjid Nabawi",
-            "Masjidil Aqsa",
-            "Ka'bah",
-            "Gunung Uhud"
-        ],
-        correct: 2
-    }
-];
+// HALAMAN
+const home = document.getElementById("home");
+const menu = document.getElementById("menu");
+const quiz = document.getElementById("quiz");
+const finish = document.getElementById("finish");
 
+const nameInput = document.getElementById("playerName");
 
-// ==========================================
-// 2. VARIABEL GAME
-// ==========================================
-
-let currentQuestion = 0;
+let playerName = "";
 let score = 0;
-let player = "Player";
+let currentQuestion = 0;
+let activeQuestions = [];
 
-
-// ==========================================
-// 3. SISTEM SOUND 8-BIT
-// ==========================================
+// =====================================
+// AUDIO SYSTEM
+// =====================================
 
 let audioContext = null;
 let soundEnabled = true;
@@ -77,300 +26,541 @@ let musicTimer = null;
 let musicStep = 0;
 
 const melody = [
-    523, 659, 784, 659,
-    587, 698, 880, 698,
-    523, 659, 784, 1047,
-    784, 659, 587, 523
+  523, 659, 784, 659,
+  587, 698, 880, 698,
+  523, 659, 784, 880,
+  784, 659, 587, 523
 ];
 
-function initAudio() {
-    if (!audioContext) {
-        audioContext = new (
-            window.AudioContext || window.webkitAudioContext
-        )();
-    }
+function setupAudio() {
+  if (!audioContext) {
+    audioContext = new (
+      window.AudioContext ||
+      window.webkitAudioContext
+    )();
+  }
 
-    if (audioContext.state === "suspended") {
-        audioContext.resume();
-    }
+  if (audioContext.state === "suspended") {
+    audioContext.resume();
+  }
 }
 
-function playTone(frequency, duration, type = "square", volume = 0.05) {
-    if (!soundEnabled || !audioContext) return;
+function playTone(
+  frequency,
+  duration = 0.2,
+  type = "sine",
+  volume = 0.06
+) {
+  if (!soundEnabled) return;
 
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+  setupAudio();
 
-    oscillator.type = type;
-    oscillator.frequency.value = frequency;
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
 
-    gain.gain.setValueAtTime(volume, audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + duration
-    );
+  oscillator.type = type;
+  oscillator.frequency.value = frequency;
 
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
+  gain.gain.setValueAtTime(
+    0.001,
+    audioContext.currentTime
+  );
 
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + duration);
+  gain.gain.linearRampToValueAtTime(
+    volume,
+    audioContext.currentTime + 0.03
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.001,
+    audioContext.currentTime + duration
+  );
+
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + duration);
 }
-
 
 // MUSIK LATAR
+
 function startMusic() {
-    if (!soundEnabled || musicTimer !== null) return;
+  if (!soundEnabled || musicTimer) return;
 
-    musicTimer = setInterval(() => {
-        if (!soundEnabled) return;
+  setupAudio();
+  musicStep = 0;
 
-        playTone(melody[musicStep], 0.15, "square", 0.018);
+  musicTimer = setInterval(() => {
+    if (!soundEnabled) return;
 
-        musicStep = (musicStep + 1) % melody.length;
-    }, 190);
+    const note = melody[musicStep];
+
+    playTone(note, 0.22, "triangle", 0.025);
+
+    if (musicStep % 4 === 0) {
+      playTone(note / 2, 0.35, "sine", 0.012);
+    }
+
+    musicStep = (musicStep + 1) % melody.length;
+
+  }, 280);
 }
 
 function stopMusic() {
-    if (musicTimer !== null) {
-        clearInterval(musicTimer);
-        musicTimer = null;
-    }
+  clearInterval(musicTimer);
+  musicTimer = null;
 }
 
+// SOUND EFFECT
 
-// SUARA JAWABAN BENAR
+function clickSound() {
+  playTone(700, 0.09);
+}
+
+function startSound() {
+  playTone(440, 0.12);
+  setTimeout(() => playTone(660, 0.2), 130);
+}
+
 function correctSound() {
-    playTone(660, 0.12);
-    setTimeout(() => playTone(880, 0.18), 120);
+  playTone(523, 0.15);
+  setTimeout(() => playTone(659, 0.15), 120);
+  setTimeout(() => playTone(784, 0.3), 240);
 }
 
-
-// SUARA JAWABAN SALAH
 function wrongSound() {
-    playTone(180, 0.3, "sawtooth", 0.06);
+  playTone(280, 0.2, "triangle", 0.04);
+  setTimeout(() => playTone(220, 0.25, "triangle", 0.04), 170);
 }
 
-
-// SUARA KEMENANGAN
 function victorySound() {
-    [523, 659, 784, 1047].forEach((note, index) => {
-        setTimeout(() => {
-            playTone(note, 0.25);
-        }, index * 180);
-    });
+  [523, 659, 784, 1046].forEach((note, index) => {
+    setTimeout(() => {
+      playTone(note, 0.4, "sine", 0.08);
+    }, index * 180);
+  });
 }
 
+// TOMBOL MUSIK
 
-// TOMBOL SOUND ON/OFF
-function toggleSound() {
-    soundEnabled = !soundEnabled;
+const soundButton = document.getElementById("soundToggle");
 
-    const button = document.getElementById("soundToggle");
+soundButton.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
 
-    if (button) {
-        button.textContent = soundEnabled
-            ? "SOUND: ON"
-            : "SOUND: OFF";
+  if (soundEnabled) {
+    soundButton.textContent = "🔊 SUARA ON";
+    setupAudio();
+    startMusic();
+    clickSound();
+  } else {
+    soundButton.textContent = "🔇 SUARA OFF";
+    stopMusic();
+  }
+});
+
+// =====================================
+// DATABASE PERTANYAAN
+// =====================================
+
+const questions = {
+
+  salam: [
+    {
+      icon: "👋",
+      question: "Apa ucapan saat bertemu teman Muslim?",
+      answers: [
+        "Halo saja",
+        "Assalamu'alaikum",
+        "Selamat tidur",
+        "Dadah"
+      ],
+      correct: 1
+    },
+    {
+      icon: "🤲",
+      question: "Apa jawaban salam?",
+      answers: [
+        "Wa'alaikumussalam",
+        "Terima kasih",
+        "Selamat pagi",
+        "Sampai jumpa"
+      ],
+      correct: 0
+    },
+    {
+      icon: "🍚",
+      question: "Sebelum makan kita membaca apa?",
+      answers: [
+        "Alhamdulillah",
+        "Bismillah",
+        "Astaghfirullah",
+        "Selamat malam"
+      ],
+      correct: 1
     }
+  ],
 
-    if (soundEnabled) {
-        initAudio();
-        startMusic();
-    } else {
-        stopMusic();
+  islam: [
+    {
+      icon: "🕌",
+      question: "Apa agama kita?",
+      answers: [
+        "Islam",
+        "Kristen",
+        "Hindu",
+        "Buddha"
+      ],
+      correct: 0
+    },
+    {
+      icon: "📖",
+      question: "Apa kitab suci umat Islam?",
+      answers: [
+        "Koran",
+        "Al-Qur'an",
+        "Buku cerita",
+        "Majalah"
+      ],
+      correct: 1
+    },
+    {
+      icon: "🌙",
+      question: "Siapa Tuhan umat Islam?",
+      answers: [
+        "Malaikat",
+        "Nabi",
+        "Allah",
+        "Manusia"
+      ],
+      correct: 2
     }
+  ],
+
+  ibadah: [
+    {
+      icon: "🕌",
+      question: "Berapa kali salat wajib sehari?",
+      answers: [
+        "1 kali",
+        "3 kali",
+        "5 kali",
+        "10 kali"
+      ],
+      correct: 2
+    },
+    {
+      icon: "💧",
+      question: "Sebelum salat kita melakukan apa?",
+      answers: [
+        "Makan",
+        "Wudu",
+        "Tidur",
+        "Bermain"
+      ],
+      correct: 1
+    },
+    {
+      icon: "🤲",
+      question: "Saat berdoa kita mengangkat apa?",
+      answers: [
+        "Kaki",
+        "Tangan",
+        "Buku",
+        "Sepatu"
+      ],
+      correct: 1
+    }
+  ],
+
+  akhlak: [
+    {
+      icon: "💖",
+      question: "Jika teman jatuh, kita harus?",
+      answers: [
+        "Menertawakan",
+        "Membantu",
+        "Meninggalkan",
+        "Marah"
+      ],
+      correct: 1
+    },
+    {
+      icon: "😊",
+      question: "Jika diberi sesuatu, kita mengucapkan?",
+      answers: [
+        "Terima kasih",
+        "Pergi",
+        "Diam",
+        "Tidak mau"
+      ],
+      correct: 0
+    },
+    {
+      icon: "👨‍👩‍👧",
+      question: "Bagaimana sikap kepada orang tua?",
+      answers: [
+        "Membentak",
+        "Tidak peduli",
+        "Hormat dan sayang",
+        "Marah"
+      ],
+      correct: 2
+    }
+  ]
+
+};
+
+// =====================================
+// NAVIGASI HALAMAN
+// =====================================
+
+function showScreen(screen) {
+
+  [home, menu, quiz, finish].forEach(item => {
+    item.classList.add("hidden");
+  });
+
+  screen.classList.remove("hidden");
 }
 
+// =====================================
+// MULAI GAME
+// =====================================
 
-// ==========================================
-// 4. SISTEM PERPINDAHAN SLIDE
-// ==========================================
+document.getElementById("startBtn").addEventListener("click", () => {
 
-function showScreen(screenId) {
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.remove("active");
-    });
+  playerName = nameInput.value.trim();
 
-    document.getElementById(screenId).classList.add("active");
-}
+  if (!playerName) {
+    alert("Isi namamu dulu ya! 😊");
+    nameInput.focus();
+    return;
+  }
 
+  setupAudio();
+  startSound();
 
-// ==========================================
-// 5. MEMULAI GAME
-// ==========================================
+  document.getElementById("welcomeName").textContent =
+    "Halo, " + playerName + "! 🌟";
 
-function startGame() {
-    const nameInput = document.getElementById("playerName").value.trim();
+  showScreen(menu);
 
-    player = nameInput || "Player";
+  startMusic();
+
+});
+
+// =====================================
+// PILIH KATEGORI
+// =====================================
+
+document.querySelectorAll(".level-card").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const category = button.dataset.category;
+
+    activeQuestions = questions[category];
 
     currentQuestion = 0;
     score = 0;
 
-    initAudio();
-    startMusic();
+    updateScore();
 
-    showScreen("quiz");
+    clickSound();
+
+    showScreen(quiz);
+
     showQuestion();
-}
 
+  });
 
-// ==========================================
-// 6. MENAMPILKAN PERTANYAAN
-// ==========================================
+});
 
+// =====================================
+// TAMPILKAN PERTANYAAN
+// =====================================
 
 function showQuestion() {
-    const q = questions[currentQuestion];
 
-    const quizScreen = document.getElementById("quiz");
+  const q = activeQuestions[currentQuestion];
 
-    // Ganti suasana dunia sesuai nomor pertanyaan
-    quizScreen.classList.remove(
-        "scene-1",
-        "scene-2",
-        "scene-3",
-        "scene-4",
-        "scene-5"
-    );
+  document.getElementById("questionIcon").textContent =
+    q.icon;
 
-    quizScreen.classList.add(`scene-${currentQuestion + 1}`);
+  document.getElementById("questionText").textContent =
+    q.question;
 
-    document.getElementById("progress").textContent =
-        `QUESTION ${currentQuestion + 1} / ${questions.length}`;
+  document.getElementById("questionNumber").textContent =
+    `${currentQuestion + 1}/${activeQuestions.length}`;
 
-    document.getElementById("question").textContent = q.question;
+  const answerContainer =
+    document.getElementById("answers");
 
-    document.getElementById("feedback").textContent = "";
+  answerContainer.innerHTML = "";
 
-    const answersContainer = document.getElementById("answers");
+  document.getElementById("feedback").textContent = "";
 
-    answersContainer.innerHTML = "";
+  document.getElementById("nextBtn").classList.add("hidden");
 
-    q.answers.forEach((answer, index) => {
-        const button = document.createElement("button");
+  q.answers.forEach((answer, index) => {
 
-        button.textContent = answer;
+    const button = document.createElement("button");
 
-        button.onclick = () => checkAnswer(index);
+    button.className = "answer-btn";
+    button.textContent = answer;
 
-        answersContainer.appendChild(button);
-    });
-}
-
-
-
-// ==========================================
-// 7. MEMERIKSA JAWABAN
-// ==========================================
-
-function checkAnswer(selected) {
-    const buttons = document.querySelectorAll("#answers button");
-
-    // Mencegah jawaban diklik berkali-kali
-    buttons.forEach(button => {
-        button.disabled = true;
+    button.addEventListener("click", () => {
+      checkAnswer(index, button);
     });
 
-    if (selected === questions[currentQuestion].correct) {
-        score += 100;
+    answerContainer.appendChild(button);
 
-        document.getElementById("feedback").textContent =
-            "CORRECT! +100 POINTS";
+  });
 
-        correctSound();
-    } else {
-        document.getElementById("feedback").textContent =
-            "WRONG ANSWER!";
-
-        wrongSound();
-    }
-
-    currentQuestion++;
-
-    setTimeout(() => {
-        if (currentQuestion < questions.length) {
-            showQuestion();
-        } else {
-            showResult();
-        }
-    }, 700);
 }
 
+// =====================================
+// PERIKSA JAWABAN
+// =====================================
 
-// ==========================================
-// 8. HASIL AKHIR
-// ==========================================
+function checkAnswer(selected, button) {
 
-function showResult() {
-    stopMusic();
+  const q = activeQuestions[currentQuestion];
 
-    showScreen("result");
+  const allButtons =
+    document.querySelectorAll(".answer-btn");
 
-    document.getElementById("finalScore").textContent =
-        `${player}, YOUR SCORE: ${score} / 500`;
+  allButtons.forEach(btn => {
+    btn.disabled = true;
+  });
 
-    victorySound();
+  if (selected === q.correct) {
+
+    score += 10;
+
+    button.classList.add("correct");
+
+    document.getElementById("feedback").textContent =
+      "🎉 MASYAALLAH! BENAR SEKALI! ⭐";
+
+    correctSound();
+
+  } else {
+
+    button.classList.add("wrong");
+
+    allButtons[q.correct].classList.add("correct");
+
+    document.getElementById("feedback").textContent =
+      "💖 Tidak apa-apa! Yuk belajar lagi!";
+
+    wrongSound();
+
+  }
+
+  updateScore();
+
+  document.getElementById("nextBtn").classList.remove("hidden");
+
 }
 
+// =====================================
+// UPDATE NILAI
+// =====================================
 
-// ==========================================
-// 9. PILIHAN ENDING
-// ==========================================
+function updateScore() {
 
-function chooseEnding(choice) {
-    const messages = {
-        Explorer: "THE EXPLORER! Kamu berani menjelajahi dunia baru!",
-        Scholar: "THE SCHOLAR! Teruslah mencari ilmu dan pengetahuan!",
-        Hero: "THE HERO! Jadilah pribadi yang baik dan pantang menyerah!"
-    };
+  document.getElementById("score").textContent =
+    "⭐ " + score;
 
-    document.getElementById("ending").textContent =
-        messages[choice];
+  document.getElementById("quizScore").textContent =
+    "⭐ " + score;
 
-    document.getElementById("choices").style.display = "none";
-
-    document.getElementById("exitPrompt").style.display = "block";
 }
 
+// =====================================
+// LANJUT PERTANYAAN
+// =====================================
 
-// ==========================================
-// 10. KELUAR DARI PERMAINAN
-// ==========================================
+document.getElementById("nextBtn").addEventListener("click", () => {
 
-function exitGame() {
-    stopMusic();
+  currentQuestion++;
 
-    document.getElementById("exitPrompt").style.display = "none";
+  clickSound();
 
-    document.getElementById("ending").textContent = "";
+  if (currentQuestion < activeQuestions.length) {
 
-    document.getElementById("exitMessage").textContent =
-        "THANK YOU FOR PLAYING! YOU CAN CLOSE THIS TAB NOW.";
+    showQuestion();
+
+  } else {
+
+    showFinish();
+
+  }
+
+});
+
+// =====================================
+// HALAMAN HASIL
+// =====================================
+
+function showFinish() {
+
+  showScreen(finish);
+
+  document.getElementById("finalMessage").textContent =
+    `Hebat ${playerName}! Kamu mendapat ${score} poin!`;
+
+  const stars = Math.round(score / 10);
+
+  document.getElementById("finalStars").textContent =
+    "⭐".repeat(stars) + "☆".repeat(3 - stars);
+
+  victorySound();
+
 }
 
+// =====================================
+// KEMBALI KE MENU
+// =====================================
 
-// ==========================================
-// 11. MAIN LAGI
-// ==========================================
+document.getElementById("backBtn").addEventListener("click", () => {
 
-function playAgain() {
-    currentQuestion = 0;
-    score = 0;
-    player = "Player";
+  clickSound();
 
-    document.getElementById("playerName").value = "";
+  showScreen(menu);
 
-    document.getElementById("choices").style.display = "block";
+});
 
-    document.getElementById("exitPrompt").style.display = "none";
+// =====================================
+// MAIN LAGI
+// =====================================
 
-    document.getElementById("ending").textContent = "";
+document.getElementById("againBtn").addEventListener("click", () => {
 
-    document.getElementById("exitMessage").textContent = "";
+  currentQuestion = 0;
+  score = 0;
 
-    stopMusic();
+  updateScore();
 
-    showScreen("opening");
-}
+  startSound();
+
+  showScreen(quiz);
+
+  showQuestion();
+
+});
+
+// =====================================
+// MENU UTAMA
+// =====================================
+
+document.getElementById("homeBtn").addEventListener("click", () => {
+
+  clickSound();
+
+  showScreen(menu);
+
+});

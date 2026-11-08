@@ -1,468 +1,488 @@
 
-/* =================================
-   ISLAMIC PIXEL ADVENTURE
-================================= */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-    background:
-        linear-gradient(to bottom, #72c9f5 0%, #b5e8fa 65%, #79bd67 65%, #438d4d 100%);
-    background-attachment: fixed;
+  font-family: 'Fredoka', sans-serif;
+  background: #b5eaff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
 }
 
-/* AREA GAME */
-#game {
-    position: relative;
-    overflow: hidden;
-    border: 5px solid #294d3c;
-    border-radius: 8px;
-    background: linear-gradient(
-        to bottom,
-        rgba(220, 247, 255, 0.96),
-        rgba(255, 255, 255, 0.96)
-    );
-    box-shadow: 0 9px 0 #294d3c;
+.game {
+  width: 100%;
+  max-width: 1050px;
+  min-height: 700px;
+  border: 7px solid #245d43;
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+  background: #a5e6ff;
+  box-shadow: 0 10px 0 #17462e;
 }
 
-/* DEKORASI MASJID */
-#game::before {
-    content: "☁️       🌙       ☁️";
-    display: block;
-    font-size: 25px;
-    padding: 12px;
-    opacity: 0.9;
+.screen {
+  min-height: 700px;
+  padding: 35px;
+  position: relative;
+  text-align: center;
 }
 
-/* JUDUL */
-#game h1 {
-    color: #176b49;
-    text-shadow: 3px 3px 0 #b8e5a8;
-    letter-spacing: 3px;
+.hidden {
+  display: none !important;
 }
 
-/* KARAKTER PIXEL */
-.pixel-character {
-    width: 110px;
-    height: 135px;
-    margin: 20px auto;
-    position: relative;
-    animation: characterFloat 1.5s infinite ease-in-out;
-    image-rendering: pixelated;
+/* MUSIK BUTTON */
+
+.sound-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  background: #ffbd4b;
+  color: white;
+  border: 3px solid white;
+  border-radius: 15px;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px #d9952d;
 }
 
-/* KOPIAH */
-.character-hat {
-    position: absolute;
-    width: 66px;
-    height: 17px;
-    background: #147b4a;
-    left: 22px;
-    top: 3px;
-    border: 4px solid #193c2b;
-    box-shadow:
-        0 -7px 0 #f4c94e,
-        0 4px 0 #0b5734;
+/* HOME */
+
+.home {
+  background: linear-gradient(#79d4f6 65%, #70c66b 65%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* WAJAH */
-.character-head {
-    position: absolute;
-    width: 66px;
-    height: 56px;
-    background: #f2bd8c;
-    left: 22px;
-    top: 22px;
-    border: 4px solid #193c2b;
-    box-sizing: border-box;
-    box-shadow: inset 0 -7px #dfa276;
+.home-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
 }
 
-/* MATA */
-.eye {
-    position: absolute;
-    width: 7px;
-    height: 9px;
-    background: #252525;
-    top: 17px;
-    box-shadow: 2px 2px #ffffff;
+.sun {
+  position: absolute;
+  right: 9%;
+  top: 50px;
+  font-size: 85px;
 }
 
-.eye.left { left: 12px; }
-.eye.right { right: 12px; }
-
-/* SENYUM */
-.smile {
-    position: absolute;
-    width: 17px;
-    height: 7px;
-    border-bottom: 3px solid #9b493c;
-    left: 20px;
-    bottom: 6px;
+.cloud {
+  position: absolute;
+  font-size: 75px;
+  animation: float 4s infinite alternate;
 }
 
-/* BAJU */
-.character-body {
-    position: absolute;
-    width: 80px;
-    height: 45px;
-    background: #168b55;
-    left: 15px;
-    top: 81px;
-    border: 4px solid #193c2b;
-    box-sizing: border-box;
-    box-shadow: inset 0 -8px #0c653d;
+.cloud1 {
+  top: 110px;
+  left: 8%;
 }
 
-/* KAKI */
-.character-feet {
-    position: absolute;
-    width: 22px;
-    height: 10px;
-    background: #493326;
-    left: 24px;
-    bottom: 0;
-    box-shadow: 34px 0 #493326;
+.cloud2 {
+  top: 220px;
+  right: 15%;
 }
 
-/* KARAKTER DI HALAMAN SOAL */
-.quiz-mascot {
-    font-size: 58px;
-    margin: 12px auto;
-    animation: characterFloat 1.5s infinite ease-in-out;
-    filter: drop-shadow(3px 4px 0 #a6c99b);
+.mascot {
+  font-size: 110px;
+  animation: bounce 2s infinite;
 }
 
-/* KARAKTER KEMENANGAN */
-.win-mascot {
-    font-size: 68px;
-    margin: 12px auto;
-    animation: victoryBounce 0.8s infinite alternate;
+h1 {
+  color: #167b50;
+  font-size: clamp(38px, 7vw, 68px);
+  font-weight: 700;
+  line-height: 1.1;
+  text-shadow: 3px 4px white;
 }
 
-/* TOMBOL GAME */
-#game button:not(.sound-button) {
-    border: 3px solid #244c37;
-    border-radius: 5px;
-    background: #26945c;
-    color: white;
-    font-weight: bold;
-    box-shadow: 0 5px 0 #175b39;
-    transition: 0.15s;
+h1 span {
+  color: #ff9f32;
 }
 
-#game button:not(.sound-button):hover {
-    transform: translateY(-3px);
-    background: #38b875;
-    box-shadow: 0 8px 0 #175b39;
+.subtitle {
+  font-size: 25px;
+  margin: 20px;
+  color: #24523c;
 }
 
-/* PANEL PERTANYAAN */
-#quiz {
-    background: rgba(255, 255, 255, 0.85);
-    border: 3px dashed #65a77b;
-    border-radius: 8px;
-    padding: 15px;
+.name-box {
+  background: white;
+  max-width: 460px;
+  margin: 20px auto;
+  padding: 25px;
+  border: 5px solid #f5c64c;
+  border-radius: 25px;
+  box-shadow: 0 7px #d9a83c;
+}
+
+.name-box label {
+  display: block;
+  font-size: 25px;
+  margin-bottom: 15px;
+  color: #26764c;
+}
+
+input {
+  width: 100%;
+  padding: 17px;
+  font-size: 22px;
+  font-family: inherit;
+  border: 3px solid #80c8b0;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.main-btn {
+  background: #20a96a;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 17px 30px;
+  font-family: inherit;
+  font-size: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 7px #116a42;
+  transition: .2s;
+}
+
+.main-btn:hover {
+  transform: translateY(-4px);
+  background: #168e56;
+}
+
+.main-btn:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 35px;
+  padding: 15px;
+}
+
+/* MENU */
+
+.menu {
+  background: linear-gradient(#8bdcff 55%, #9ddc83 55%);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 22px;
+  border-radius: 18px;
+  font-size: 22px;
+  color: #168b58;
+  font-weight: 700;
+}
+
+.menu h2 {
+  margin-top: 35px;
+  color: #267a4e;
+  font-size: 32px;
+}
+
+.menu h1 {
+  margin-top: 5px;
+  font-size: 48px;
+}
+
+.big-text {
+  font-size: 26px;
+  margin: 15px;
+  color: #345c43;
+}
+
+.guide {
+  font-size: 90px;
+  margin: 5px;
+  animation: bounce 2s infinite;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  max-width: 750px;
+  margin: 15px auto;
+}
+
+.level-card {
+  border: 5px solid #f4c34e;
+  background: white;
+  border-radius: 22px;
+  padding: 20px;
+  font-family: inherit;
+  color: #236c4b;
+  cursor: pointer;
+  box-shadow: 0 6px #d7a73b;
+  transition: .2s;
+}
+
+.level-card:hover {
+  transform: scale(1.04);
+  background: #fff8d9;
+}
+
+.level-card span {
+  display: block;
+  font-size: 55px;
+}
+
+.level-card b {
+  display: block;
+  font-size: 25px;
+}
+
+.level-card small {
+  display: block;
+  font-size: 17px;
+  margin-top: 8px;
+}
+
+/* QUIZ */
+
+.quiz {
+  background: linear-gradient(#8bdcff 50%, #a8dd8b 50%);
+}
+
+.small-btn {
+  padding: 12px 18px;
+  background: #ffbd4b;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.quiz-character {
+  font-size: 85px;
+  margin: 15px;
+  animation: bounce 2s infinite;
+}
+
+.question-card {
+  background: white;
+  border: 5px solid #f5c34c;
+  border-radius: 25px;
+  max-width: 750px;
+  margin: 0 auto 20px;
+  padding: 22px;
+  box-shadow: 0 7px #d8a83e;
+}
+
+.question-icon {
+  font-size: 55px;
+}
+
+.question-card h2 {
+  font-size: 32px;
+  color: #197d52;
+  margin: 10px;
+}
+
+.question-card p {
+  font-size: 19px;
+  color: #777;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  max-width: 700px;
+  margin: auto;
+}
+
+.answer-btn {
+  padding: 20px;
+  background: white;
+  border: 4px solid #80c9a0;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 25px;
+  font-weight: 600;
+  color: #276d49;
+  cursor: pointer;
+  box-shadow: 0 5px #5eaa7c;
+}
+
+.answer-btn:hover {
+  background: #fff3bb;
+}
+
+.answer-btn.correct {
+  background: #8bed9c;
+  border-color: #239c50;
+}
+
+.answer-btn.wrong {
+  background: #ffb3b3;
+  border-color: #db5656;
+}
+
+.answer-btn:disabled {
+  cursor: default;
+}
+
+.feedback {
+  font-size: 25px;
+  font-weight: 700;
+  margin: 18px;
+  color: #177b4d;
+  min-height: 35px;
+}
+
+#nextBtn {
+  margin: 10px;
+}
+
+/* FINISH */
+
+.finish {
+  background: linear-gradient(#9de2ff 55%, #a7df8b 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.confetti {
+  font-size: 35px;
+}
+
+.trophy {
+  font-size: 120px;
+  animation: bounce 1.5s infinite;
+}
+
+.finish h1 {
+  font-size: 55px;
+  color: #ed9b28;
+}
+
+.finish h2 {
+  font-size: 32px;
+  color: #16864e;
+  margin: 15px;
+}
+
+.finish p {
+  font-size: 24px;
+  margin: 10px;
+}
+
+.final-stars {
+  font-size: 55px;
+  margin: 20px;
+}
+
+.secondary-btn {
+  margin-top: 20px;
+  background: #ffb94c;
+  border: none;
+  border-radius: 15px;
+  padding: 15px 25px;
+  font-family: inherit;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
 }
 
 /* ANIMASI */
-@keyframes characterFloat {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-8px);
-    }
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
-@keyframes victoryBounce {
-    from {
-        transform: translateY(0) rotate(-5deg);
-    }
-    to {
-        transform: translateY(-12px) rotate(5deg);
-    }
+@keyframes float {
+  from { transform: translateX(0); }
+  to { transform: translateX(25px); }
 }
 
-/* TAMPILAN HP */
-@media (max-width: 600px) {
-    #game {
-        width: 92%;
-        margin: auto;
-    }
+/* RESPONSIVE */
 
-    .pixel-character {
-        transform: scale(0.9);
-    }
-}
+@media(max-width: 600px) {
+  .game, .screen {
+    min-height: 750px;
+  }
 
-/* =====================================
-   ISLAMIC PIXEL WORLD BACKGROUND
-===================================== */
+  .screen {
+    padding: 18px;
+  }
 
-body {
-    min-height: 100vh;
-    margin: 0;
-    background-color: #75c9ed;
-    background-image:
-        /* Bintang dan awan */
-        radial-gradient(circle, #fff4bd 2px, transparent 3px),
-        radial-gradient(ellipse, #ffffff 0 45%, transparent 47%),
+  .level-grid {
+    gap: 12px;
+  }
 
-        /* Kubah masjid */
-        radial-gradient(ellipse at 50% 100%,
-            #f5c75e 0 48%, transparent 50%),
+  .level-card {
+    padding: 12px 7px;
+  }
 
-        /* Menara kiri dan kanan */
-        linear-gradient(#e9e1c2, #e9e1c2),
+  .level-card span {
+    font-size: 43px;
+  }
 
-        /* Bukit belakang */
-        radial-gradient(ellipse at 20% 100%,
-            #76ad65 0 55%, transparent 57%),
+  .level-card b {
+    font-size: 19px;
+  }
 
-        radial-gradient(ellipse at 85% 100%,
-            #4f985d 0 55%, transparent 57%),
+  .level-card small {
+    font-size: 14px;
+  }
 
-        /* Rumput */
-        linear-gradient(to bottom,
-            transparent 0 70%,
-            #65ad57 70% 100%);
-
-    background-size:
-        90px 90px,
-        170px 70px,
-        180px 110px,
-        25px 150px,
-        300px 130px,
-        350px 150px,
-        100% 100%;
-
-    background-position:
-        20px 30px,
-        70% 90px,
-        50% 250px,
-        12% 190px,
-        0 300px,
-        100% 270px,
-        center;
-    background-repeat:
-        repeat,
-        no-repeat,
-        no-repeat,
-        no-repeat,
-        no-repeat,
-        no-repeat,
-        no-repeat;
-
-    background-attachment: fixed;
-}
-
-/* DUNIA GAME */
-#game {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(225, 249, 255, 0.94),
-            rgba(255, 255, 255, 0.94)
-        );
-    border: 5px solid #315b42;
-    box-shadow: 0 9px 0 #244b35;
-}
-
-/* DEKORASI POHON DAN BUNGA */
-#game::after {
-    content: "🌳  🌷  🌼  🌿  🌼  🌷  🌳";
-    display: block;
-    text-align: center;
+  .question-card h2 {
     font-size: 25px;
-    padding: 10px 0;
-    background: #9bd47a;
-    border-top: 4px solid #548f4b;
-    image-rendering: pixelated;
-}
+  }
 
-/* JUDUL GAME */
-#game h1 {
-    color: #176b49;
-    text-shadow:
-        2px 2px #ffffff,
-        4px 4px #b2d99b;
-}
+  .answer-btn {
+    font-size: 19px;
+    padding: 17px 8px;
+  }
 
-/* KOTAK PEMBUKA */
-#opening {
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(255, 255, 255, 0.95),
-            rgba(220, 245, 225, 0.85)
-        );
-    border-radius: 12px;
-}
+  .sun {
+    font-size: 55px;
+  }
 
-/* PANEL QUIZ */
-#quiz {
-    background: rgba(255, 255, 255, 0.96);
-    border: 4px solid #83bd83;
-    border-radius: 12px;
-    box-shadow: 0 6px 0 #43865a;
-}
+  .mascot {
+    font-size: 85px;
+  }
 
-/* PANEL ENDING */
-#result {
-    background:
-        linear-gradient(
-            135deg,
-            #fff9df,
-            #e0f5d9
-        );
-    border-radius: 12px;
-}
+  .subtitle {
+    font-size: 19px;
+  }
 
-/* HIASAN KARTU */
-#opening,
-#quiz,
-#result {
-    position: relative;
-    z-index: 1;
-}
+  .main-btn {
+    font-size: 20px;
+    padding: 15px;
+  }
 
-/* =========================================
-   ISLAMIC ADVENTURE - 7 DIFFERENT WORLDS
-========================================= */
-
-/* Hapus dekorasi lama yang menempel di seluruh game */
-#game::before,
-#game::after {
-    content: none !important;
-}
-
-/* Pengaturan semua layar */
-#opening,
-#quiz,
-#result {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    box-sizing: border-box;
-    min-height: 560px;
-    padding: 35px 20px;
-    border: 5px solid #31533b;
-    border-radius: 12px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
-/* Pastikan tulisan dan tombol di atas dekorasi */
-#opening > *,
-#quiz > *,
-#result > * {
-    position: relative;
-    z-index: 2;
-}
-
-/* 1. OPENING - DESA ISLAMI */
-#opening {
-    background:
-        radial-gradient(circle at 85% 13%, #fff1a3 0 35px, transparent 37px),
-        radial-gradient(ellipse at 20% 40%, #ffffff 0 35px, transparent 37px),
-        radial-gradient(ellipse at 30% 40%, #ffffff 0 25px, transparent 27px),
-        radial-gradient(ellipse at 80% 85%, #65ad57 0 100px, transparent 102px),
-        linear-gradient(to top, #39834c 0 22%, transparent 22%),
-        linear-gradient(to bottom, #70c9f2, #d8f4ff);
-}
-
-/* 2. QUESTION 1 - HUTAN */
-#quiz.scene-1 {
-    background:
-        radial-gradient(circle at 12% 30%, #27824b 0 65px, transparent 67px),
-        radial-gradient(circle at 88% 27%, #2c8b50 0 75px, transparent 77px),
-        linear-gradient(90deg,
-            transparent 15%, #765035 15% 19%, transparent 19% 81%,
-            #765035 81% 85%, transparent 85%),
-        linear-gradient(135deg, transparent 0 45%, #b4a06b 45% 60%, transparent 60%),
-        linear-gradient(to top, #438c48 0 30%, transparent 30%),
-        linear-gradient(#80d2f2, #d8f4ff);
-}
-
-/* 3. QUESTION 2 - TAMAN MASJID */
-#quiz.scene-2 {
-    background:
-        radial-gradient(ellipse at 50% 65%, #9bd9e6 0 65px, transparent 67px),
-        radial-gradient(circle at 15% 35%, #5baf59 0 55px, transparent 57px),
-        radial-gradient(circle at 85% 35%, #5baf59 0 55px, transparent 57px),
-        radial-gradient(circle at 50% 100%, #e4d48b 0 100px, transparent 102px),
-        linear-gradient(to top, #66ad5b 0 25%, transparent 25%),
-        linear-gradient(#80d5f5, #e3f8ff);
-}
-
-/* 4. QUESTION 3 - PERPUSTAKAAN ILMU */
-#quiz.scene-3 {
-    background:
-        repeating-linear-gradient(
-            0deg,
-            transparent 0 27px,
-            #80502f 28px 36px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            #e9bd76 0 40px,
-            #a66b43 40px 46px
-        );
-    background-color: #f2d9a5;
-}
-
-/* 5. QUESTION 4 - PADANG PASIR */
-#quiz.scene-4 {
-    background:
-        radial-gradient(circle at 83% 15%, #fff1a1 0 42px, transparent 44px),
-        radial-gradient(ellipse at 15% 100%, #d7a65d 0 130px, transparent 132px),
-        radial-gradient(ellipse at 90% 100%, #c18b49 0 150px, transparent 152px),
-        linear-gradient(to top, #b77d3f 0 24%, transparent 24%),
-        linear-gradient(#f6bc76, #ffe0a5);
-}
-
-/* 6. QUESTION 5 - GERBANG KA'BAH */
-#quiz.scene-5 {
-    background:
-        linear-gradient(90deg,
-            transparent 10%, #dfc58b 10% 20%,
-            transparent 20% 80%, #dfc58b 80% 90%,
-            transparent 90%),
-        linear-gradient(to bottom,
-            transparent 0 35%,
-            #252d35 35% 62%,
-            #d8ad48 62% 67%,
-            #252d35 67% 100%),
-        linear-gradient(#7abfe2, #d9eff5);
-}
-
-/* 7. ENDING - ISTANA KEMENANGAN */
-#result {
-    background:
-        radial-gradient(circle at 15% 15%, #fff1a3 0 3px, transparent 4px),
-        radial-gradient(circle at 80% 20%, #fff1a3 0 3px, transparent 4px),
-        radial-gradient(circle at 45% 12%, #fff1a3 0 3px, transparent 4px),
-        radial-gradient(circle at 65% 35%, #fff1a3 0 3px, transparent 4px),
-        linear-gradient(to top, #51436e 0 25%, transparent 25%),
-        linear-gradient(#222d58, #86618c);
-}
-
-/* PANEL PERTANYAAN */
-#quiz {
-    border-color: #315b42;
-}
-
-/* PANEL HASIL */
-#result {
-    border-color: #e5c36c;
-    color: white;
-}
-
-#result h1,
-#result h2,
-#result p {
-    text-shadow: 2px 2px 3px #27334b;
+  .sound-toggle {
+    font-size: 13px;
+    padding: 9px;
+  }
 }
