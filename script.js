@@ -220,8 +220,22 @@ function startGame() {
 // 6. MENAMPILKAN PERTANYAAN
 // ==========================================
 
+
 function showQuestion() {
     const q = questions[currentQuestion];
+
+    const quizScreen = document.getElementById("quiz");
+
+    // Ganti suasana dunia sesuai nomor pertanyaan
+    quizScreen.classList.remove(
+        "scene-1",
+        "scene-2",
+        "scene-3",
+        "scene-4",
+        "scene-5"
+    );
+
+    quizScreen.classList.add(`scene-${currentQuestion + 1}`);
 
     document.getElementById("progress").textContent =
         `QUESTION ${currentQuestion + 1} / ${questions.length}`;
@@ -244,6 +258,7 @@ function showQuestion() {
         answersContainer.appendChild(button);
     });
 }
+
 
 
 // ==========================================

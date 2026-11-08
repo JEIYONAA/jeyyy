@@ -327,3 +327,142 @@ body {
     position: relative;
     z-index: 1;
 }
+
+/* =========================================
+   ISLAMIC ADVENTURE - 7 DIFFERENT WORLDS
+========================================= */
+
+/* Hapus dekorasi lama yang menempel di seluruh game */
+#game::before,
+#game::after {
+    content: none !important;
+}
+
+/* Pengaturan semua layar */
+#opening,
+#quiz,
+#result {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    box-sizing: border-box;
+    min-height: 560px;
+    padding: 35px 20px;
+    border: 5px solid #31533b;
+    border-radius: 12px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Pastikan tulisan dan tombol di atas dekorasi */
+#opening > *,
+#quiz > *,
+#result > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* 1. OPENING - DESA ISLAMI */
+#opening {
+    background:
+        radial-gradient(circle at 85% 13%, #fff1a3 0 35px, transparent 37px),
+        radial-gradient(ellipse at 20% 40%, #ffffff 0 35px, transparent 37px),
+        radial-gradient(ellipse at 30% 40%, #ffffff 0 25px, transparent 27px),
+        radial-gradient(ellipse at 80% 85%, #65ad57 0 100px, transparent 102px),
+        linear-gradient(to top, #39834c 0 22%, transparent 22%),
+        linear-gradient(to bottom, #70c9f2, #d8f4ff);
+}
+
+/* 2. QUESTION 1 - HUTAN */
+#quiz.scene-1 {
+    background:
+        radial-gradient(circle at 12% 30%, #27824b 0 65px, transparent 67px),
+        radial-gradient(circle at 88% 27%, #2c8b50 0 75px, transparent 77px),
+        linear-gradient(90deg,
+            transparent 15%, #765035 15% 19%, transparent 19% 81%,
+            #765035 81% 85%, transparent 85%),
+        linear-gradient(135deg, transparent 0 45%, #b4a06b 45% 60%, transparent 60%),
+        linear-gradient(to top, #438c48 0 30%, transparent 30%),
+        linear-gradient(#80d2f2, #d8f4ff);
+}
+
+/* 3. QUESTION 2 - TAMAN MASJID */
+#quiz.scene-2 {
+    background:
+        radial-gradient(ellipse at 50% 65%, #9bd9e6 0 65px, transparent 67px),
+        radial-gradient(circle at 15% 35%, #5baf59 0 55px, transparent 57px),
+        radial-gradient(circle at 85% 35%, #5baf59 0 55px, transparent 57px),
+        radial-gradient(circle at 50% 100%, #e4d48b 0 100px, transparent 102px),
+        linear-gradient(to top, #66ad5b 0 25%, transparent 25%),
+        linear-gradient(#80d5f5, #e3f8ff);
+}
+
+/* 4. QUESTION 3 - PERPUSTAKAAN ILMU */
+#quiz.scene-3 {
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0 27px,
+            #80502f 28px 36px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            #e9bd76 0 40px,
+            #a66b43 40px 46px
+        );
+    background-color: #f2d9a5;
+}
+
+/* 5. QUESTION 4 - PADANG PASIR */
+#quiz.scene-4 {
+    background:
+        radial-gradient(circle at 83% 15%, #fff1a1 0 42px, transparent 44px),
+        radial-gradient(ellipse at 15% 100%, #d7a65d 0 130px, transparent 132px),
+        radial-gradient(ellipse at 90% 100%, #c18b49 0 150px, transparent 152px),
+        linear-gradient(to top, #b77d3f 0 24%, transparent 24%),
+        linear-gradient(#f6bc76, #ffe0a5);
+}
+
+/* 6. QUESTION 5 - GERBANG KA'BAH */
+#quiz.scene-5 {
+    background:
+        linear-gradient(90deg,
+            transparent 10%, #dfc58b 10% 20%,
+            transparent 20% 80%, #dfc58b 80% 90%,
+            transparent 90%),
+        linear-gradient(to bottom,
+            transparent 0 35%,
+            #252d35 35% 62%,
+            #d8ad48 62% 67%,
+            #252d35 67% 100%),
+        linear-gradient(#7abfe2, #d9eff5);
+}
+
+/* 7. ENDING - ISTANA KEMENANGAN */
+#result {
+    background:
+        radial-gradient(circle at 15% 15%, #fff1a3 0 3px, transparent 4px),
+        radial-gradient(circle at 80% 20%, #fff1a3 0 3px, transparent 4px),
+        radial-gradient(circle at 45% 12%, #fff1a3 0 3px, transparent 4px),
+        radial-gradient(circle at 65% 35%, #fff1a3 0 3px, transparent 4px),
+        linear-gradient(to top, #51436e 0 25%, transparent 25%),
+        linear-gradient(#222d58, #86618c);
+}
+
+/* PANEL PERTANYAAN */
+#quiz {
+    border-color: #315b42;
+}
+
+/* PANEL HASIL */
+#result {
+    border-color: #e5c36c;
+    color: white;
+}
+
+#result h1,
+#result h2,
+#result p {
+    text-shadow: 2px 2px 3px #27334b;
+}
