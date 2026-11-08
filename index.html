@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Quiz Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main id="game">
+        <button id="soundToggle" class="sound-button" onclick="toggleSound()">
+    SOUND: ON
+</button>
+
+        <!-- SLIDE 1: PEMBUKA -->
+        <section class="screen active" id="opening">
+            <h1>PIXEL QUIZ</h1>
+            <p>Welcome to your adventure!</p>
+            <p>Siap memulai petualanganmu?</p>
+
+            <input
+                type="text"
+                id="playerName"
+                placeholder="Masukkan namamu"
+            >
+
+            <button onclick="startGame()">START GAME</button>
+        </section>
+
+        <!-- SLIDE 2-6: PERTANYAAN -->
+        <section class="screen" id="quiz">
+            <p id="progress">QUESTION 1 / 5</p>
+
+            <h2 id="question"></h2>
+
+            <div id="answers"></div>
+
+            <p id="feedback"></p>
+        </section>
+
+        <!-- SLIDE 7: HASIL DAN ENDING -->
+        <section class="screen" id="result">
+
+            <h1>GAME COMPLETED!</h1>
+
+            <p id="finalScore"></p>
+
+            <h2>CHOOSE YOUR ENDING</h2>
+
+            <p>Pilih jalan ceritamu!</p>
+
+            <div id="choices">
+                <button onclick="chooseEnding('Explorer')">
+                    THE EXPLORER
+                </button>
+
+                <button onclick="chooseEnding('Scholar')">
+                    THE SCHOLAR
+                </button>
+
+                <button onclick="chooseEnding('Hero')">
+                    THE HERO
+                </button>
+            </div>
+
+            <p id="ending"></p>
+
+            <!-- PILIHAN KELUAR -->
+            <div id="exitPrompt" style="display: none;">
+
+                <h2>INGIN KELUAR DARI PERMAINAN?</h2>
+
+                <button onclick="exitGame()">
+                    YES, EXIT GAME
+                </button>
+
+                <button onclick="playAgain()">
+                    NO, PLAY AGAIN
+                </button>
+
+            </div>
+
+            <p id="exitMessage"></p>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

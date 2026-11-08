@@ -1,0 +1,133 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #15152e;
+    color: #ffffff;
+    font-family: 'VT323', monospace;
+    padding: 20px;
+}
+
+#game {
+    width: 100%;
+    max-width: 650px;
+    min-height: 430px;
+    background: #292952;
+    border: 6px solid #f7d774;
+    box-shadow: 10px 10px 0 #080819;
+    padding: 35px 25px;
+    text-align: center;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 24px;
+    line-height: 1.8;
+    color: #f7d774;
+    margin: 35px 0 20px;
+}
+
+h2 {
+    font-size: 32px;
+    margin: 25px 0;
+}
+
+p {
+    font-size: 25px;
+    margin: 20px 0;
+}
+
+input {
+    width: 90%;
+    padding: 14px;
+    margin: 20px 0;
+    font-family: 'VT323', monospace;
+    font-size: 23px;
+    text-align: center;
+    border: 4px solid #f7d774;
+    background: #15152e;
+    color: white;
+}
+
+button {
+    display: block;
+    width: 90%;
+    margin: 12px auto;
+    padding: 14px;
+    background: #f7d774;
+    color: #15152e;
+    border: 4px solid #ffffff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 11px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+button:hover {
+    background: #ff9d76;
+    transform: translateY(-3px);
+}
+
+#answers button {
+    background: #70d6a3;
+}
+
+#answers button:hover {
+    background: #f7d774;
+}
+
+#progress {
+    color: #70d6a3;
+    font-size: 24px;
+}
+
+#ending {
+    color: #f7d774;
+    font-size: 28px;
+    line-height: 1.5;
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 17px;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+
+    #game {
+        padding: 25px 12px;
+    }
+}
+
+.sound-button {
+    width: auto;
+    margin: 0 0 20px auto;
+    padding: 10px 14px;
+    font-size: 9px;
+    background: #70d6a3;
+    border: 3px solid white;
+}
+
+.sound-button:hover {
+    background: #f7d774;
+}
